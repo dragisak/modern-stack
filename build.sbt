@@ -7,6 +7,7 @@ scalaVersion := "2.13.1"
 val versions = new {
   val circe      = "0.12.3"
   val ciris      = "1.0.0"
+  val fs2        = "2.0.1"
   val http4s     = "0.21.0-M5"
   val catsEffect = "2.0.0"
   val catsRetry  = "0.3.1"
@@ -48,3 +49,5 @@ scalacOptions ++= List(
 
 addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.1")
 addCompilerPlugin("org.typelevel" %% "kind-projector"     % "0.11.0" cross CrossVersion.full)
+
+mainClass := Some("modern.stack.Main")
