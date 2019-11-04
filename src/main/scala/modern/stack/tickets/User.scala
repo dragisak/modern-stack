@@ -20,4 +20,9 @@ object User {
   @newtype case class Name(value: NonEmptyString)
   @newtype case class Address(value: NonEmptyString)
   @newtype case class Password(value: NonEmptyString)
+
+  import eu.timepit.refined.auto._
+  import io.estatico.newtype.ops._
+
+  val dragisa: Name = ("Dragisa": NonEmptyString).coerce[Name]
 }
