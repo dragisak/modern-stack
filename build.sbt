@@ -5,19 +5,20 @@ version := "0.1"
 scalaVersion := "2.13.1"
 
 val versions = new {
-  val circe      = "0.12.3"
-  val ciris      = "1.0.0"
+  val circe      = "0.13.0"
+  val ciris      = "1.0.4"
   val fs2        = "2.0.1"
-  val http4s     = "0.21.0-M5"
-  val catsEffect = "2.0.0"
-  val catsRetry  = "0.3.1"
-  val jwtAuth    = "0.0.3"
+  val http4s     = "0.21.1"
+  val catsEffect = "2.1.1"
+  val catsRetry  = "1.1.0"
+  val jwtAuth    = "0.0.4"
   val log4cats   = "1.0.1"
   val logback    = "1.2.3"
   val mtl        = "0.4.0"
   val newtype    = "0.4.3"
-  val redis4cats = "0.9.1"
-  val skunk      = "0.0.4"
+  val redis4cats = "0.9.3"
+  val skunk      = "0.0.7"
+  val slf4j      = "1.7.30"
 }
 
 libraryDependencies ++= List(
@@ -56,6 +57,10 @@ scalacOptions ++= List(
   "-unchecked",                    // Enable additional warnings where generated code depends on assumptions.
   "-Xcheckinit",                   // Wrap field accessors to throw an exception on uninitialized access.
   "-Ymacro-annotations"
+)
+
+dependencyOverrides ++= List(
+  "org.slf4j" % "slf4j-api" % versions.slf4j
 )
 
 addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.1")
