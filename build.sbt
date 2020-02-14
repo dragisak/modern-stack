@@ -19,6 +19,7 @@ val versions = new {
   val redis4cats = "0.9.3"
   val skunk      = "0.0.7"
   val slf4j      = "1.7.30"
+  val squants    = "1.6.0"
 }
 
 libraryDependencies ++= List(
@@ -40,8 +41,8 @@ libraryDependencies ++= List(
   "com.olegpy"        %% "meow-mtl-effects"       % versions.mtl,
   "io.estatico"       %% "newtype"                % versions.newtype,
   "dev.profunktor"    %% "redis4cats-effects"     % versions.redis4cats,
-  "org.tpolecat"      %% "skunk-core"             % versions.skunk
-  // "org.typelevel"     %% "squants"                % versions.squants
+  "org.tpolecat"      %% "skunk-core"             % versions.skunk,
+  "org.typelevel"     %% "squants"                % versions.squants
 )
 
 scalacOptions ++= List(
