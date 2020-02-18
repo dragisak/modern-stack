@@ -2,9 +2,11 @@ package modern.stack.tickets
 
 import cats.{Eq, Monad}
 import org.scalacheck.Arbitrary
-import org.scalacheck.Prop._
 import org.typelevel.discipline.Laws
 import cats.kernel.laws.discipline._
+import modern.stack.tickets.Event.EventTime
+import eu.timepit.refined.auto._
+import org.scalacheck.Prop.{forAll, propBoolean}
 
 abstract class ApiTest[F[_]] extends Laws {
   protected def laws: ApiLaws[F]
@@ -15,10 +17,18 @@ abstract class ApiTest[F[_]] extends Laws {
       arbEventTime: Arbitrary[Event.EventTime],
       arbQty: Arbitrary[SeatCount],
       arbUserId: Arbitrary[User.ID],
-      eqFOptTicket: Eq[F[Option[SeatCount]]]
-  ) = new SimpleRuleSet(
+      eqFOptTicket: Eq[F[Option[SeatCount]]],
+      eqFTicket: Eq[F[SeatCount]]
+  ): RuleSet = new SimpleRuleSet(
     name = "Api",
-    "create event and find tickets" -> forAll(laws.createEventAndGetTickets _)
+    "create event and find tickets" -> forAll(
+      laws.createEventAndGetTickets _
+    ),
+    "get ticket and buy it" -> forAll(
+      (name: Event.Name, time: EventTime, capacity: SeatCount, userId: User.ID, qty: SeatCount) =>
+        (capacity.n >= qty.n) ==>
+          laws.getTicketAndBuyIt(name, time, capacity, userId, qty)
+    )
   )
 }
 
