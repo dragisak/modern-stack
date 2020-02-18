@@ -17,8 +17,9 @@ abstract class ApiTest[F[_]] extends Laws {
       arbEventTime: Arbitrary[Event.EventTime],
       arbQty: Arbitrary[SeatCount],
       arbUserId: Arbitrary[User.ID],
-      eqFOptTicket: Eq[F[Option[SeatCount]]],
-      eqFTicket: Eq[F[SeatCount]]
+      eqCountOpt: Eq[F[Option[SeatCount]]],
+      eqCount: Eq[F[SeatCount]],
+      eqCountTuple: Eq[F[(SeatCount, SeatCount)]]
   ): RuleSet = new SimpleRuleSet(
     name = "Api",
     "create event and find tickets" -> forAll(
@@ -28,6 +29,9 @@ abstract class ApiTest[F[_]] extends Laws {
       (name: Event.Name, time: EventTime, capacity: SeatCount, userId: User.ID, qty: SeatCount) =>
         (capacity.n >= qty.n) ==>
           laws.getTicketAndBuyIt(name, time, capacity, userId, qty)
+    ),
+    "event capacity after allocation" -> forAll(
+      laws.currentCapacity _
     )
   )
 }

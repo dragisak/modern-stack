@@ -1,11 +1,13 @@
 package modern.stack.tickets
 
-import cats.{Applicative, Monad}
+import cats.Monad
 import cats.kernel.laws._
 import cats.syntax.functor._
 import cats.syntax.flatMap._
 import cats.syntax.traverse._
 import cats.instances.list._
+import eu.timepit.refined.numeric.Positive
+import eu.timepit.refined._
 import eu.timepit.refined.auto._
 
 abstract class ApiLaws[F[_]] {
@@ -51,13 +53,18 @@ abstract class ApiLaws[F[_]] {
       eventTime: Event.EventTime,
       seats: SeatCount,
       requests: List[(User.ID, SeatCount)]
-  ) = {
+  ): IsEq[F[(SeatCount, SeatCount)]] = {
     val result = for {
       event    <- algebra.createEvent(eventName, eventTime, seats)
       _        <- requests.traverse { case (userId, qty) => algebra.findTicket(userId, event.id, qty) }
       capacity <- algebra.getCurrentCapacity(event.id)
     } yield capacity
 
+    val Right(expected) = refineV[Positive](
+      math.max(0, seats.n.value - requests.map(_._2.n.value).sum)
+    )
+
+    result.map(c => (c.total, c.available)) <-> M.pure((seats, SeatCount(expected)))
   }
 
 }
