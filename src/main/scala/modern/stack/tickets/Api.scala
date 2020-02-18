@@ -4,7 +4,11 @@ trait Api[F[_]] {
 
   def registerUser(name: User.Name, username: User.Username, password: User.Password): F[User]
   def logIn(userName: User.Username, password: User.Password): F[Option[User]]
-  def logOut(userName: User.Username, password: User.Password): F[Unit]
+  def logOut(userId: User.ID): F[Unit]
 
-  def findTicket(userId: User.ID, eventId: Event.ID, n: Ticket.Qty): F[Option[Ticket]]
+  def createEvent(name: Event.Name, time: Event.EventTime, seats: SeatCount): F[Event]
+  def getCurrentCapacity(eventId: Event.ID): F[EventCapacity]
+
+  def findTicket(userId: User.ID, eventId: Event.ID, qty: SeatCount): F[Option[Ticket]]
+  def buyTicket(ticket: Ticket): F[Sale]
 }

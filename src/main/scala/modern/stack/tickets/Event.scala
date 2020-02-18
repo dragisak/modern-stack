@@ -10,11 +10,11 @@ import modern.stack.tickets.Event._
 final case class Event(
     id: ID,
     name: Name,
-    time: DateTime
+    time: EventTime
 )
 
 object Event {
   @newtype case class ID(id: UUID)
   @newtype case class Name(value: NonEmptyString)
-  @newtype case class DateTime(value: ZonedDateTime)
+  @newtype case class EventTime(value: ZonedDateTime)
 }
