@@ -23,6 +23,7 @@ val versions = new {
   val slf4j               = "1.7.30"
   val squants             = "1.6.0"
   val scalatest           = "3.1.0"
+  val catsScalatest       = "1.0.0"
   val scalacheck          = "1.14.3"
   val scalacheckShapeless = "1.2.4"
   val disciplineScalatest = "1.0.0"
@@ -39,6 +40,7 @@ libraryDependencies ++= List(
   "io.circe"                   %% "circe-refined"             % versions.circe,
   "is.cir"                     %% "ciris"                     % versions.ciris,
   "is.cir"                     %% "ciris-refined"             % versions.ciris,
+  "is.cir"                     %% "ciris-squants"             % versions.ciris,
   "eu.timepit"                 %% "refined"                   % versions.refined,
   "org.http4s"                 %% "http4s-blaze-server"       % versions.http4s,
   "org.http4s"                 %% "http4s-circe"              % versions.http4s,
@@ -52,6 +54,7 @@ libraryDependencies ++= List(
   "org.tpolecat"               %% "skunk-core"                % versions.skunk,
   "org.typelevel"              %% "squants"                   % versions.squants,
   "org.scalatest"              %% "scalatest"                 % versions.scalatest % Test,
+  "org.typelevel"              %% "cats-testkit-scalatest"    % versions.catsScalatest % Test,
   "org.typelevel"              %% "cats-laws"                 % versions.cats % Test,
   "org.typelevel"              %% "discipline-scalatest"      % versions.disciplineScalatest % Test,
   "org.scalatestplus"          %% "scalacheck-1-14"           % versions.scalatestScalacheck % Test,
