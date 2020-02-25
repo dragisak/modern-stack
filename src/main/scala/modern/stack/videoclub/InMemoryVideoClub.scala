@@ -28,8 +28,5 @@ class InMemoryVideoClub private (ref: Ref[IO, Map[MovieId, Set[DVD]]]) extends A
 }
 
 object InMemoryVideoClub {
-  def make(): IO[Api[IO]] =
-    for {
-      ref <- Ref.of[IO, Map[MovieId, Set[DVD]]](Map[MovieId, Set[DVD]]())
-    } yield new InMemoryVideoClub(ref)
+  def make(): IO[Api[IO]] = Ref.of[IO, Map[MovieId, Set[DVD]]](Map.empty).map(new InMemoryVideoClub(_))
 }

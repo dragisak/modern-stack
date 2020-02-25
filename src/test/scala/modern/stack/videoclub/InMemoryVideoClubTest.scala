@@ -16,14 +16,7 @@ class InMemoryVideoClubTest extends CatsSuite {
     } yield Movie(MovieId(uuid), title)
   )
 
-  private implicit def eqIO[T](implicit ev: Eq[T]): Eq[IO[T]] = new Eq[IO[T]] {
-    override def eqv(x: IO[T], y: IO[T]): Boolean = {
-      val a = x.unsafeRunSync()
-      val b = y.unsafeRunSync()
-      ev.eqv(a, b)
-    }
-  }
-
+  private implicit def eqIO[T: Eq]: Eq[IO[T]] = Eq.by(_.unsafeRunSync())
   private implicit val arbQty: Arbitrary[Qty] = Arbitrary(numeric.chooseRefinedNum(1, 100))
 
   checkAll("InMemoryVideoClub", ApiTest(api).videoClubLaws)

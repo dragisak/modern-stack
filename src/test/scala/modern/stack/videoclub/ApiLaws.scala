@@ -13,7 +13,7 @@ trait ApiLaws[F[_]] {
 
   def createInventoryAndFindDVD(movie: Movie, qty: Qty): IsEq[F[Boolean]] = {
     val result = for {
-      dvds   <- api.addInventory(movie, qty)
+      _      <- api.addInventory(movie, qty)
       lookup <- api.findDVD(movie.id)
     } yield lookup
 
