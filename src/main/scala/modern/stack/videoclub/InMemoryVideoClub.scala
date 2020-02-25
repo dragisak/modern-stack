@@ -6,7 +6,7 @@ import cats.effect.IO
 import cats.effect.concurrent.Ref
 import eu.timepit.refined.auto._
 
-class InMemoryVideoClub private (ref: Ref[IO, Map[MovieId, Set[DVD]]]) extends Api[IO] {
+final class InMemoryVideoClub private (ref: Ref[IO, Map[MovieId, Set[DVD]]]) extends Api[IO] {
   override def addInventory(movie: Movie, qty: Qty): IO[List[DVD]] = ref.modify { map =>
     val newDvds = List.fill(qty)(UUID.randomUUID()).map(uuid => DVD(DvdId(uuid), movie.id))
     val updated = map.get(movie.id) match {
