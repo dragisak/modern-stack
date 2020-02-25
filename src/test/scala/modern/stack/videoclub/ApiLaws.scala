@@ -11,15 +11,13 @@ trait ApiLaws[F[_]] {
 
   protected implicit def M: Monad[F]
 
-  def createInventoryAndFindDVD(movie: Movie, qty: Qty): IsEq[F[Boolean]] = {
+  def forCreatedInventoryYouShouldFindQuantityAndNoMore(movie: Movie, qty: Qty): IsEq[F[(Int, Int)]] = {
     val result = for {
-      _      <- api.addInventory(movie, qty)
-      lookup <- api.findDVD(movie.id)
-    } yield lookup
+      _       <- api.addInventory(movie, qty)
+      lookups <- List.fill(qty + 1)(()).traverse(_ => api.findDVD(movie.id))
+    } yield lookups
 
-    val resultFound = if (qty > 0) true else false
-
-    result.map(_.isDefined) <-> M.pure(resultFound)
+    result.map(res => res.partition(_.isDefined).bimap(_.size, _.size)) <-> M.pure((qty.value, 1))
   }
 
 }
