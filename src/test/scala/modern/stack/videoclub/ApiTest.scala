@@ -12,7 +12,7 @@ trait ApiTest[F[_]] extends Laws {
   def videoClubLaws(
       implicit arbMovie: Arbitrary[Movie],
       arbQty: Arbitrary[Qty],
-      eqFIntPair: Eq[F[(Int, Int)]]
+      eqFIntPair: Eq[F[(Boolean, Boolean, Boolean)]]
   ): RuleSet = new SimpleRuleSet(
     "Video Club Laws",
     "Create inventory. Find qty of DVDs sand no more" -> forAll(
