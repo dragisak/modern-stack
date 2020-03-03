@@ -15,7 +15,7 @@ trait ApiTest[F[_]] extends Laws {
       eqFIntPair: Eq[F[(Boolean, Boolean, Boolean)]]
   ): RuleSet = new SimpleRuleSet(
     "Video Club Laws",
-    "Create inventory. Find qty of DVDs sand no more" -> forAll(
+    "Create inventory. Find qty of DVDs and no more" -> forAll(
       laws.forCreatedInventoryYouShouldFindQuantityAndNoMore _
     )
   )
