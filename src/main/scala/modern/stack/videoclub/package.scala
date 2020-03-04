@@ -2,13 +2,12 @@ package modern.stack
 
 import java.util.UUID
 
-import eu.timepit.refined.api.Refined
-import eu.timepit.refined.numeric.Positive
+import eu.timepit.refined.types.numeric.PosInt
 import io.estatico.newtype.macros.newtype
 
 package object videoclub {
 
-  type Qty = Int Refined Positive
+  type Qty = PosInt
 
   @newtype final case class MovieId(uuid: UUID)
   @newtype final case class DvdId(uuid: UUID)

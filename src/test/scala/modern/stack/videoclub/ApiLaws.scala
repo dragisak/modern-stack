@@ -1,7 +1,12 @@
 package modern.stack.videoclub
 
 import cats.Monad
-import cats.implicits._
+import cats.syntax.flatMap._
+import cats.syntax.traverse._
+import cats.syntax.functor._
+import cats.syntax.eq._
+import cats.instances.list._
+import cats.instances.set._
 import cats.kernel.laws._
 import eu.timepit.refined.auto._
 

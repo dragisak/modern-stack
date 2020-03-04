@@ -4,7 +4,7 @@ import cats.{Eq, Monad}
 import org.typelevel.discipline.Laws
 import cats.kernel.laws.discipline._
 import org.scalacheck.Arbitrary
-import org.scalacheck.Prop._
+import org.scalacheck.Prop.forAll
 
 trait ApiTest[F[_]] extends Laws {
   protected def laws: ApiLaws[F]
