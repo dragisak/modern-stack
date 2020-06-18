@@ -2,7 +2,7 @@ name := "modern-stack"
 
 version := "0.1"
 
-scalaVersion := "2.13.1"
+scalaVersion := "2.13.2"
 
 val versions = new {
   val circe               = "0.13.0"
